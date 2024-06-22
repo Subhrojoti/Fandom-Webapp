@@ -112,6 +112,9 @@ const Header = () => {
             TV Shows
           </li>
           <li className="menuItem">
+            <Link to="/bookmark">Bookmarks</Link>
+          </li>
+          <li className="menuItem">
             <Link to={isUserLogin ? "/profile" : "/login"}>
               <CgProfile size={30} />
             </Link>

@@ -16,9 +16,11 @@ const Bookmark = () => {
         <div className="pageHeader">
           <div className="pageTitle">Bookmarked</div>
         </div>
-        {bookMarkList?.map((item, k) => (
-          <MovieCard key={k} data={item} mediaType={item.mediaType} />
-        ))}
+        <div className="content">
+          {bookMarkList?.map((item, k) => (
+            <MovieCard key={k} data={item} mediaType={item.mediaType} />
+          ))}
+        </div>
       </ContentWrapper>
     </div>
   );
