@@ -71,20 +71,20 @@
 
       top: 10px;
       right: 10px;
-      background-color: white;
+      background: linear-gradient(to bottom right, rgb(81, 231, 114), rgb(243, 211, 27));
       border-radius: 50%;
       flex-shrink: 0;
       @include md {
-        width: 50px;
-        height: 50px;
+        width: 40px;
+        height: 40px;
       }
     }
     .bookmarkTag:hover {
       width: 45px;
       height: 45px;
       @include md {
-        width: 55px;
-        height: 55px;
+        width: 45px;
+        height: 45px;
       }
     }
   }

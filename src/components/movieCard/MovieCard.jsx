@@ -11,6 +11,7 @@ import PosterFallback from "../../assets/no-poster.png";
 import { FaRegBookmark } from "react-icons/fa6";
 import { FaBookmark } from "react-icons/fa6";
 import { addBookmark, removeBookmark } from "../../store/homeSlice";
+import { auth } from "../fireBase/Firebase";
 
 const MovieCard = ({ data, fromSearch, mediaType }) => {
   const { url } = useSelector((state) => state.home);
@@ -23,11 +24,26 @@ const MovieCard = ({ data, fromSearch, mediaType }) => {
     ? url.poster + data.poster_path
     : PosterFallback;
 
+  const [isUserLogin, setUserLogin] = useState();
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setUserLogin(!!user);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
   const handleBookmark = () => {
-    if (!isBookmark) {
-      dispatch(addBookmark(data));
+    if (isUserLogin) {
+      if (isBookmark) {
+        dispatch(removeBookmark(data));
+      } else {
+        dispatch(addBookmark(data));
+      }
+      setIsBookmark(!isBookmark);
     } else {
-      dispatch(removeBookmark(data));
+      navigate("/login");
     }
   };
 

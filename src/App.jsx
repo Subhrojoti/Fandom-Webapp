@@ -31,19 +31,22 @@ function App() {
   const [isUserLogin, setUserLogin] = useState();
 
   useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      setUserLogin(user);
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setUserLogin(!!user);
     });
+
+    return () => unsubscribe();
   }, []);
 
-  console.log(isUserLogin);
+  // console.log(isUserLogin);
+
   useEffect(() => {
     fetchApiConfig();
     genresCall();
   }, []);
   const fetchApiConfig = () => {
     fetchDataFromapi("/configuration").then((res) => {
-      console.log(res);
+      // console.log(res);
 
       const url = {
         backdrop: res.images.secure_base_url + "original",
@@ -75,7 +78,7 @@ function App() {
     <BrowserRouter>
       <Header />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" exact element={<Home />} />
         <Route path="/:mediaType/:id" element={<Details />} />
         <Route path="/search/:query" element={<SearchResult />} />
         <Route path="/explore/:mediaType" element={<Explore />} />
@@ -85,7 +88,10 @@ function App() {
           path="/profile"
           element={isUserLogin ? <Profile /> : <Navigate to="/login" />}
         />
-        <Route path="/bookmark" element={<Bookmark />} />
+        <Route
+          path="/bookmark"
+          element={isUserLogin ? <Bookmark /> : <Navigate to="/login" />}
+        />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
       <ToastContainer />

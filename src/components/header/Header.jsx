@@ -20,13 +20,16 @@ const Header = () => {
   const [showSearch, setShowSearch] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
-  const [isUserLogin, setUserLogin] = useState();
 
   // To check wheather a user is logged in or not
+  const [isUserLogin, setUserLogin] = useState();
+
   useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      setUserLogin(user);
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setUserLogin(!!user);
     });
+
+    return () => unsubscribe();
   }, []);
   // console.log(isUserLogin);
 
@@ -105,6 +108,9 @@ const Header = () => {
           <li className="menuItem">
             <HiOutlineSearch onClick={openSearch} />
           </li>
+          <li className="menuItem">
+            <Link to="/">Home</Link>
+          </li>
           <li className="menuItem" onClick={() => navigationHandler("movie")}>
             Movies
           </li>
@@ -112,7 +118,7 @@ const Header = () => {
             TV Shows
           </li>
           <li className="menuItem">
-            <Link to="/bookmark">Bookmarks</Link>
+            <Link to={isUserLogin ? "/bookmark" : "/login"}>Bookmarks</Link>
           </li>
           <li className="menuItem">
             <Link to={isUserLogin ? "/profile" : "/login"}>
