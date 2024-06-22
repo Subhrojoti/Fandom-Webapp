@@ -1,10 +1,10 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   BsFillArrowLeftCircleFill,
   BsFillArrowRightCircleFill,
 } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import dayjs from "dayjs";
 
 import ContentWrapper from "../contentWrapper/ContentWrapper";
@@ -14,11 +14,38 @@ import PosterFallback from "../../assets/no-poster.png";
 import CircleRating from "../circleRating/CircleRating";
 
 import "./style.scss";
+// import { FaBookmark, FaRegBookmark } from "react-icons/fa";
+// import { addBookmark, removeBookmark } from "../../store/homeSlice";
 
 const Carousel = ({ data, loading, endpoint, title }) => {
   const carouselContainer = useRef();
   const { url } = useSelector((state) => state.home);
   const navigate = useNavigate();
+  // const [isBookmark, setIsBookmark] = useState(false);
+  // const bookMarkList = useSelector((state) => state?.home?.bookmark);
+  // const bookmarkRef = useRef(null);
+  // const dispatch = useDispatch();
+
+  // const handleBookmark = (item) => {
+  //   if (!isBookmark) {
+  //     dispatch(addBookmark(item));
+  //   } else {
+  //     dispatch(removeBookmark(item));
+  //   }
+  // };
+
+  // const handleClick = (event, item) => {
+  //   if (
+  //     !bookmarkRef?.current &&
+  //     !bookmarkRef?.current?.contains(event?.target)
+  //   ) {
+  //     navigate(`/${item.media_type || endpoint}/${item.id}`);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   setIsBookmark(bookMarkList?.some((item) => item?.id === data?.id));
+  // }, [bookMarkList, data]);
 
   const navigation = (dir) => {
     const container = carouselContainer.current;
@@ -67,14 +94,19 @@ const Carousel = ({ data, loading, endpoint, title }) => {
                 <div
                   key={item.id}
                   className="carouselItem"
-                  onClick={() =>
-                    navigate(`/${item.media_type || endpoint}/${item.id}`)
-                  }
+                  onClick={(event) => handleClick(event, item)}
                 >
                   <div className="posterBlock">
                     <Img src={posterUrl} />
                     <CircleRating rating={item?.vote_average?.toFixed(1)} />
                     <Genres data={item.genre_ids.slice(0, 2)} />
+                    {/* <div
+                      className="bookmarkTag"
+                      onClick={() => handleBookmark(item)}
+                      ref={bookmarkRef}
+                    >
+                      {isBookmark ? <FaBookmark /> : <FaRegBookmark />}
+                    </div> */}
                   </div>
                   <div className="textBlock">
                     <span className="title">{item.title || item.name}</span>
