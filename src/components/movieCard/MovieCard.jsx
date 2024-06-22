@@ -33,7 +33,7 @@ const MovieCard = ({ data, fromSearch, mediaType }) => {
 
   const handleClick = (event) => {
     if (
-      !bookmarkRef?.current &&
+      !bookmarkRef?.current ||
       !bookmarkRef?.current?.contains(event?.target)
     ) {
       navigate(`/${data.media_type || mediaType}/${data.id}`);
@@ -43,9 +43,10 @@ const MovieCard = ({ data, fromSearch, mediaType }) => {
   useEffect(() => {
     setIsBookmark(bookMarkList?.some((item) => item?.id === data?.id));
   }, [bookMarkList, data]);
+
   return (
-    <div className="movieCard" onClick={() => handleClick()}>
-      <div className="posterBlock" ref={bookmarkRef}>
+    <div className="movieCard" onClick={(event) => handleClick(event)}>
+      <div className="posterBlock">
         <Img className="posterImg" src={posterUrl} />
         {!fromSearch && (
           <React.Fragment>
@@ -55,7 +56,7 @@ const MovieCard = ({ data, fromSearch, mediaType }) => {
         )}
         <div
           className="bookmarkTag"
-          onClick={(event) => handleBookmark(event)}
+          onClick={() => handleBookmark()}
           ref={bookmarkRef}
         >
           {isBookmark ? <FaBookmark /> : <FaRegBookmark />}
