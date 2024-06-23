@@ -1,4 +1,4 @@
-# [Fandom WebApp]((https://climaxweb.netlify.app/)
+# [Fandom WebApp](https://climaxweb.netlify.app/)
 
 Climax is a movie database platform inspired by IMDB. It allows users to browse, search, and view detailed information about movies. Users can also sign up, log in, and manage a watchlist of their favorite movies using Firebase for authentication. The application is built with React and Redux Toolkit, ensuring efficient state management and a seamless user experience.
 
