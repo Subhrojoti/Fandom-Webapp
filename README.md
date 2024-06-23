@@ -104,4 +104,4 @@ This project is licensed under the MIT License.
 
 ## Contact
 
-For any inquiries or feedback, please contact [your email](subhrojoti20@gmail.com).
+For any inquiries or feedback, please contact [Contact Me](subhrojoti20@gmail.com).
